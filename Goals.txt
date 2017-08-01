@@ -1,0 +1,33 @@
+
+
+Setup the Following Programs
+-----------------------------
+
+honey pots
+-----------
+RubbeGlue.py
+Rubber Glue – Like honey ports but redirects traffic back at the attacker.
+Honey Port – Blackholes IPs that connect to a specified port.
+Artillery.py – Honeypot and FIM
+
+Detection
+---------
+yara
+Evolve
+SeLinux? 
+??? rootkit removier?
+OSSIM? 
+PFSENSE?
+Human.py – detects “Human-like” behavior on service accounts. Looks for misspelled commands etc.
+Ossec – File integrity monitor
+
+other
+------
+??? TCP / Ip Packet Obsifcation/ Nmap defeater
+
+scripts
+-----------------------------
+
+setup ssh
+lockdown folders + privlages 
+update + upgrade
