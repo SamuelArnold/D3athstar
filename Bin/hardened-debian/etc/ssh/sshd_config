@@ -1,0 +1,76 @@
+# Michael Jack with Changes by Sam Arnold lol 
+# June 2016
+# Man: http://man.openbsd.org/sshd_config
+# Rational for the cryptography mostly
+# comes from: https://stribika.github.io/2015/01/04/secure-secure-shell.html
+
+# Port to listen for SSH connections on
+# Non-default is better
+Port 22
+
+## Banner 
+Banner /etc/issue.net
+
+# Do we use IPv4, 6 or both
+# inet for IPv4, inet6 for IPv6, any for IPv4 & 6
+AddressFamily inet
+
+# What local IP address(es) should sshd listen on
+ListenAddress $IPv4
+
+# Logging
+LogLevel VERBOSE
+
+# Disable Forwarding
+# N.B Users can install their own forwarders
+X11Forwarding no
+AllowTcpForwarding no
+
+# use builtin OpenSSH SFTP Server
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+# Authentication
+# public key auth only, only users in sudo group can login
+# Only allows use of ed25519 and RSA keys
+
+# Path to private  keys
+# Better dir structure /etc/ssh/keys/ssh_host_$_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+
+# File the public keys that can be used for user authentication live in
+# each user has their own authorized_keys file in their home fodler
+AuthorizedKeysFile %h/.ssh/authorized_keys
+
+# Allows use of only ed25519 and RSA keys
+HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,ssh-rsa
+
+# Modern key exchange, ciphers and MACs
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com
+# Specify which individual users can login
+# Checking Order: Users, Groups (Deny, Allow)
+# AllowUsers $USERNAME
+
+# only users in the sudo group can login
+AllowGroups sudo
+
+# Disable password authentication
+PasswordAuthentication no
+
+# Do not allow root login over SSH
+PermitRootLogin no
+
+# Disable login via challenge-response style authentication
+ChallengeResponseAuthentication no
+
+# Disable PAM authentication, you're probably not using it
+UsePAM no
+
+# server disconnects after this time if user has not successfully logged in
+LoginGraceTime 60
+
+# if 10 unauthenticated connections drop new connections with probability %30
+# all connections refused if >= 25 unauthenticated connections
+MaxStartups 10:30:25

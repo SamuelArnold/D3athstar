@@ -13,6 +13,9 @@ echo -e "\e[104m3-  RKHunter            - Checks for rootkits                   
 echo -e "\e[104m4-  Lynis               - Checks how harden the system is             "
 echo -e "\e[104m5-  RubberGlue          - TCP Honey Pot                               "
 echo -e "\e[104m6-  Port Proof          - Lists all ports as open and listening       "
+echo -e "\e[104m7-  Human.py            - Test if User Has Human like Commans         "
+echo -e "\e[104m8-  Linux-Kernel-Tuning-and-Hardening -  Self Eplanitory              "
+echo -e "\e[104m9-  NixArmor            -  Hardening Script                           "
 echo -e "\e[47m=============================================================          "
 echo -e "\e[49m                                                                       "
 
@@ -117,7 +120,33 @@ read -p "Your First choice:  " UserChoice
 					cd "$myvar"
 					echo "===== Complete ======="
 				fi
+					
+				if [ "$UserChoice" -eq "8" ]
+					then
+						echo "Linux-Kernel-Tuning-and-Hardening"
+						echo $PWD
+						sudo cp -a ./Bin/Linux-Kernel-Tuning-and-Hardening /opt/Linux-Kernel-Tuning-and-Hardening > /dev/null 2>&1
+						myvar="$PWD"
+						cd /opt/Linux-Kernel-Tuning-and-Hardening
+						sudo ./kernel_hardening_tuning.sh
+						cd "$myvar"
+						echo "===== Complete ======="
+					fi
+					
+					
 			
+			
+				if [ "$UserChoice" -eq "9" ]
+					then
+						echo "NixArmor"
+						echo $PWD
+						sudo cp -a ./Bin/nixarmor /opt/ > /dev/null 2>&1
+						myvar="$PWD"
+						cd /opt/nixarmor
+						sudo ./debian_harden.sh
+						cd "$myvar"
+						echo "===== Complete ======="
+					fi
 			
 			if [ "$UserChoice" -eq "40" ]
 				then
